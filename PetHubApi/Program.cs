@@ -1,7 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using PetHubApi.Configurations;
+using PetHubApi.Data;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionString = builder.Configuration.GetConnectionString("PetAPIConnectionStr");
+builder.Services.AddDbContext<PetAPIDBContext>(options =>
+{
+    options.UseSqlServer(connectionString);
+});
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -15,6 +23,7 @@ builder.Services.AddCors(options=>
 }
 );
 builder.Host.UseSerilog((ctx,lc)=>lc.WriteTo.Console().ReadFrom.Configuration(ctx.Configuration));
+builder.Services.AddAutoMapper(typeof(MapperConfig));
 
 var app = builder.Build();
 

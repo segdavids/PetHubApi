@@ -22,9 +22,7 @@ namespace PetHubApi.Repository
         {
             
                 var gotten = await GetAsync(id);
-                if(gotten is null)
-                    return;
-                _context.Remove(gotten);
+                _context.Set<T>().Remove(gotten);
                 _context.SaveChanges();
         }
 

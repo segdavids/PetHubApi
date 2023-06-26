@@ -2,5 +2,6 @@
 {
     public class UpdateCountryDto
     {
+        public int id { get; set; }
     }
 }
